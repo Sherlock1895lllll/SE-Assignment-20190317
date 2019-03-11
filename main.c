@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
                 wrong++;
         }
     }  //end of 10 inputs
-	printf("\n\nYour bitch ass got %d answers wrong.\n\n", wrong);
+	printf("\n\nYou got %d answers wrong.\n\n", wrong);
     for(int i=0; i<wrong; i++){
         printf("%s\n", wAns[i].ans);
 	    }
