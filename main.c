@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct wrongAns{
+typedef struct wrongAns{	//Structure containing wrong answers and relative operations
 		char *ans[100];
 		}wrongAns;
 		wrongAns wAns[10];
 
 float findTotal(int n, float* operands, int* operators);  //function that computes the total
-char findOp(int m);
+char findOp(int m);	//function matching an integer in [0,3] to a sign
 
 int main(int argc, char* argv[])
 {
@@ -20,11 +20,11 @@ int main(int argc, char* argv[])
     }
 
     //generate vectors with dynamic allocation
-    int n= atoi(argv[1]);       //n is the input from the user
+    int n= atoi(argv[1]);       //n is the command line input from the user
     int* operators = (int*) malloc ((n-1)*sizeof(int));
     float* operands = (float*) malloc (n*sizeof(float));
 
-    //initializing wrong counter and wrong array
+    //initializing counter for wrong answers
     int wrong = 0;
 
     for(int k=0;k<10;k++){
@@ -57,8 +57,8 @@ int main(int argc, char* argv[])
         scanf("%f", &uTot);
         float tot = findTotal(n, operands, operators);      //computing total
         float Dtot = uTot - tot;           //checking answer
-        if (Dtot>0.05||Dtot<-0.05){
-            switch(n){
+        if (Dtot>0.05||Dtot<-0.05){	//Check if answer is outside of tolerance
+            switch(n){  //Saving wrong answers and relative operations as strings in structure
                 case 3:	sprintf(wAns[wrong].ans, "%.0f %c %.0f %c %.0f = %.2f\n", operands[0], findOp(operators[0]), operands[1], findOp(operators[1]), operands[2], tot);
 			break;
                 case 4: sprintf(wAns[wrong].ans, "%.0f %c %.0f %c %.0f %c %.0f = %.2f\n", operands[0], findOp(operators[0]), operands[1], findOp(operators[1]), operands[2], findOp(operators[2]), operands[3],  tot);
@@ -77,8 +77,7 @@ int main(int argc, char* argv[])
 	    }
     return 0;
 }
-
-//to determine operations we generate a number between 0 and 3 and assign an operation to each value
+//function calculating result of operation
 float findTotal(int n, float* operands, int* operators){
     float tot = operands[0];
 
@@ -99,7 +98,7 @@ float findTotal(int n, float* operands, int* operators){
     }
     return tot;
 }
-
+//to determine operations the function takes as input a number between 0 and 3 and assign an operation to each value
 char findOp(int m){
 	switch(m){
 		case 0:
